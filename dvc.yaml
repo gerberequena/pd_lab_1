@@ -1,0 +1,45 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - data/dataset_v1.csv
+    - params.yml
+    - src/prepare.py
+    params:
+    - prepare
+    outs:
+    - data/prepared.csv
+  featurize:
+    cmd: python src/featurized.py
+    deps:
+    - data/prepared.csv
+    - params.yml
+    - src/featurized.py
+    params:
+    - featurize
+    outs:
+    - data/featurized.pkl
+    - model/scaler.pkl
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/featurized.pkl
+    - params.yml
+    - src/train.py
+    params:
+    - train
+    outs:
+    - model/model.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - model/model.pkl
+    - params.yml
+    - src/evaluate.py
+    params:
+    - evaluate
+    outs:
+    - plots/pred_vs_actual.csv
+    metrics:
+    - metrics.json:
+        cache: false
