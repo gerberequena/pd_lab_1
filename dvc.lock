@@ -1,0 +1,90 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/dataset_v1.csv
+      hash: md5
+      md5: fa9fe4cf24f70b69ac65fb33062ddf34
+      size: 1915795
+    - path: params.yml
+      hash: md5
+      md5: 27fe3d85d10f6e37bd53bc07aa648d01
+      size: 865
+    - path: src/prepare.py
+      hash: md5
+      md5: aed206fb81622c5825528d7240d41819
+      size: 971
+    outs:
+    - path: data/prepared.csv
+      hash: md5
+      md5: 0a35dc57883117caae066527c7e9c79e
+      size: 1373394
+  featurize:
+    cmd: python src/featurized.py
+    deps:
+    - path: data/prepared.csv
+      hash: md5
+      md5: 0a35dc57883117caae066527c7e9c79e
+      size: 1373394
+    - path: params.yml
+      hash: md5
+      md5: 27fe3d85d10f6e37bd53bc07aa648d01
+      size: 865
+    - path: src/featurized.py
+      hash: md5
+      md5: 68ca3b3ff0d8060ea198673cff38bf54
+      size: 1465
+    outs:
+    - path: data/featurized.pkl
+      hash: md5
+      md5: e20c607148a481f98663f81b92e41374
+      size: 1156146
+    - path: model/scaler.pkl
+      hash: md5
+      md5: 27847b7f0b919d1ed0a1591ebea54e76
+      size: 1079
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/featurized.pkl
+      hash: md5
+      md5: e20c607148a481f98663f81b92e41374
+      size: 1156146
+    - path: params.yml
+      hash: md5
+      md5: 27fe3d85d10f6e37bd53bc07aa648d01
+      size: 865
+    - path: src/train.py
+      hash: md5
+      md5: 45cc394cdf712b4bae0b714fba43c9d4
+      size: 1566
+    outs:
+    - path: model/model.pkl
+      hash: md5
+      md5: 15bd4b2ae64cba8ac308ab27347b2949
+      size: 231986
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: model/model.pkl
+      hash: md5
+      md5: 15bd4b2ae64cba8ac308ab27347b2949
+      size: 231986
+    - path: params.yml
+      hash: md5
+      md5: 27fe3d85d10f6e37bd53bc07aa648d01
+      size: 865
+    - path: src/evaluate.py
+      hash: md5
+      md5: aaa7c7150f988008e27349a8eb9521b7
+      size: 1486
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: a5e951f8191c3283f0908f6aeb170bba
+      size: 100
+    - path: plots/pred_vs_actual.csv
+      hash: md5
+      md5: 17f2b3dec5ddc30ace1663f15dad4754
+      size: 105569
