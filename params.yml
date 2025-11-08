@@ -1,0 +1,30 @@
+prepare:
+  data_path: "data/dataset_v1.csv"
+  target: "MedHouseVal"
+  keep_cols:
+    ["MedInc", "HouseAge", "AveRooms", "Population", "AveOccup", "Latitude"]
+  FILE_DATA_PREP: "data/prepared.csv"
+
+featurize:
+  data_path: "data/prepared.csv"
+  target: "MedHouseVal"
+  keep_cols:
+    ["MedInc", "HouseAge", "AveRooms", "Population", "AveOccup", "Latitude"]
+  FILE_DATA_FEATURIZED: "data/featurized.pkl"
+  FILE_SCALER: "model/scaler.pkl" # NUEVO: Ruta para guardar el scaler
+
+train:
+  random_state: 42
+  test_size: 0.2
+  file_path: "data/featurized.pkl"
+  file_model: "model/model.pkl"
+  model_params:
+    random_state: 42
+    max_iter: 1000
+    tol: 0.00001
+    learning_rate: "invscaling"
+
+evaluate:
+  file_model: "model/model.pkl" # Ruta ajustada a la carpeta model/
+  file_metrics: "metrics.json"
+  out_plot: plots/pred_vs_actual.csv
