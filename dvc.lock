@@ -5,8 +5,8 @@ stages:
     deps:
     - path: data/dataset_v1.csv
       hash: md5
-      md5: fa9fe4cf24f70b69ac65fb33062ddf34
-      size: 1915795
+      md5: 6f5a4f067b70a5438f3fcda917fb25e1
+      size: 1809127
     - path: params.yml
       hash: md5
       md5: 27fe3d85d10f6e37bd53bc07aa648d01
@@ -18,15 +18,15 @@ stages:
     outs:
     - path: data/prepared.csv
       hash: md5
-      md5: 0a35dc57883117caae066527c7e9c79e
-      size: 1373394
+      md5: fc4625fede89d5f1b83c13a0c6d1d6c8
+      size: 1299659
   featurize:
     cmd: python src/featurized.py
     deps:
     - path: data/prepared.csv
       hash: md5
-      md5: 0a35dc57883117caae066527c7e9c79e
-      size: 1373394
+      md5: fc4625fede89d5f1b83c13a0c6d1d6c8
+      size: 1299659
     - path: params.yml
       hash: md5
       md5: 27fe3d85d10f6e37bd53bc07aa648d01
@@ -38,19 +38,19 @@ stages:
     outs:
     - path: data/featurized.pkl
       hash: md5
-      md5: e20c607148a481f98663f81b92e41374
-      size: 1156146
+      md5: 66cec1ebd3c9dc8295fdaaeecb1e0577
+      size: 1096170
     - path: model/scaler.pkl
       hash: md5
-      md5: 27847b7f0b919d1ed0a1591ebea54e76
+      md5: 82279e9b7c78a811c50522d401e340ac
       size: 1079
   train:
     cmd: python src/train.py
     deps:
     - path: data/featurized.pkl
       hash: md5
-      md5: e20c607148a481f98663f81b92e41374
-      size: 1156146
+      md5: 66cec1ebd3c9dc8295fdaaeecb1e0577
+      size: 1096170
     - path: params.yml
       hash: md5
       md5: 27fe3d85d10f6e37bd53bc07aa648d01
@@ -62,15 +62,15 @@ stages:
     outs:
     - path: model/model.pkl
       hash: md5
-      md5: 15bd4b2ae64cba8ac308ab27347b2949
-      size: 231986
+      md5: 2ea90f5bac319ee3bd3684e6557445fe
+      size: 220002
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: model/model.pkl
       hash: md5
-      md5: 15bd4b2ae64cba8ac308ab27347b2949
-      size: 231986
+      md5: 2ea90f5bac319ee3bd3684e6557445fe
+      size: 220002
     - path: params.yml
       hash: md5
       md5: 27fe3d85d10f6e37bd53bc07aa648d01
@@ -82,9 +82,9 @@ stages:
     outs:
     - path: metrics.json
       hash: md5
-      md5: a5e951f8191c3283f0908f6aeb170bba
+      md5: 9b082a3a0a8b8f2cf9af1781ff4db24e
       size: 100
     - path: plots/pred_vs_actual.csv
       hash: md5
-      md5: 17f2b3dec5ddc30ace1663f15dad4754
-      size: 105569
+      md5: 01cc7d7fb870ba2fae4867ae38a49335
+      size: 99748
